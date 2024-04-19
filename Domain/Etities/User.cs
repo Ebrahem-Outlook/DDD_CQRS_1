@@ -16,7 +16,7 @@ public class User : IEquatable<User?>
         Password = password;
     }
 
-    public User Create(string name, string email, string password)
+    public static User Create(string name, string email, string password)
     {
         var user = new User(name, email, password);
         if(user is User)

@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace Persistence.Data;
 
-public class ApplicationDbContext : DbContext 
+public class ApplicationDbContext : DbContext , IApplicationDbContext, IUnitOfWork
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
     

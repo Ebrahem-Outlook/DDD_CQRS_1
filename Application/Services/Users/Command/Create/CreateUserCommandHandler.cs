@@ -1,12 +1,19 @@
 ﻿
+using Domain.Interfaces;
 using MediatR;
 
 namespace Application.Services.Users.Command.Create;
 
 public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand>
 {
-    public Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    private readonly IUserRepository context;
+    public CreateUserCommandHandler(IUserRepository context)
     {
-        throw new NotImplementedException();
+        this.context = context;
+    }
+
+    public async Task Handle(CreateUserCommand request, CancellationToken cancellationToken)
+    {
+        await context.Create(request);
     }
 }
