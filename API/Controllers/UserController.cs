@@ -26,27 +26,22 @@ public class UserController : ControllerBase
         return Ok(await mediator.Send(new GetAllUsersQuery()));
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("id")]
     public async Task<IActionResult> GetById(Guid id)
     {
         return Ok(await mediator.Send(new GetByIdUserQuery(id)));
     }
 
-    [HttpGet]
+    [HttpGet("email")]
     public async Task<IActionResult> GetByEmail(string email)
     {
         return Ok(await mediator.Send(new GetByEmailUserQuery(email)));
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(CreateUser user)
+    public async Task<IActionResult> Post(CreateUserRequest user)
     {
-        var IsCreated = await mediator.Send(new CreateUserCommand
-        {
-            Name = user.Name,
-            Email = user.Email,
-            Password = user.Password,
-        });
+        var IsCreated = await mediator.Send(new CreateUserCommand(user.Name, user.Email, user.Password));
         if (IsCreated)
         {
             return Ok();
@@ -57,13 +52,7 @@ public class UserController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> Put(UpdateUserRequest user)
     {
-        var IsDelete = await mediator.Send(new UpdateUserCommand
-        {
-            Id = user.Id,
-            Name = user.Name,
-            Email = user.Email,
-            Password = user.Password,
-        });
+        var IsDelete = await mediator.Send(new UpdateUserCommand(user.Id, user.Name, user.Email, user.Password));
         if (IsDelete)
         {
             return Ok();

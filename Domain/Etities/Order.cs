@@ -1,4 +1,5 @@
-﻿namespace Domain.Etities;
+﻿
+namespace Domain.Etities;
 public class Order : IEquatable<Order?>
 {
     public Guid Id { get; private set; }
@@ -6,14 +7,33 @@ public class Order : IEquatable<Order?>
     public decimal TotalPrice { get; private set; }
     public List<OrderItem> OrderItems { get; private set; } = new List<OrderItem>();
 
-    public Order() { }
+    private Order() { }
 
-    public Order(string name, List<OrderItem> orderItems)
+    private Order(string name, List<OrderItem> orderItems)
     {
         Id = Guid.NewGuid();
         Name = name;
-        TotalPrice = orderItems.Sum(o => o.Price);
+        TotalPrice = orderItems.Sum(o => o.Price * o.Quantity);
         OrderItems = orderItems;
+    }
+
+    public static Order Create(string name, List<OrderItem> orderItems)
+    {
+        var order = new Order(name, orderItems);
+        if (order is Order)
+        {
+            return order;
+        }
+        throw new ArgumentNullException();
+    }
+    
+    public void UpdateName(string name)
+    {
+        if(name is null)
+        {
+            throw new ArgumentNullException();
+        }
+        Name = name;
     }
 
     public void UpdateOrderItem(List<OrderItem> orderItems)

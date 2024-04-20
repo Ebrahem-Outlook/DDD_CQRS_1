@@ -1,7 +1,7 @@
 ﻿
 namespace Contracts.Users;
 
-public class CreateUser
+public class CreateUserRequest
 {
     public string Name { get; set; }
     public string Email { get; set; }
