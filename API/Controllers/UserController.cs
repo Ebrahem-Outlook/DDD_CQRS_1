@@ -4,7 +4,7 @@ using Application.Services.Users.Command.Update;
 using Application.Services.Users.Query.GetAll;
 using Application.Services.Users.Query.GetByEmail;
 using Application.Services.Users.Query.GetById;
-using Contracts.DTO;
+using Contracts.Users;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,23 +39,46 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Post(UserDTO user)
+    public async Task<IActionResult> Post(CreateUser user)
     {
-        await mediator.Send(new CreateUserCommand(user));
-        return Ok();
+        var IsCreated = await mediator.Send(new CreateUserCommand
+        {
+            Name = user.Name,
+            Email = user.Email,
+            Password = user.Password,
+        });
+        if (IsCreated)
+        {
+            return Ok();
+        }
+        return BadRequest();
     }
 
     [HttpPut]
-    public async Task<IActionResult> Put(UserDTO user)
+    public async Task<IActionResult> Put(UpdateUserRequest user)
     {
-        await mediator.Send(new UpdateUserCommand(user));
-        return Ok();
+        var IsDelete = await mediator.Send(new UpdateUserCommand
+        {
+            Id = user.Id,
+            Name = user.Name,
+            Email = user.Email,
+            Password = user.Password,
+        });
+        if (IsDelete)
+        {
+            return Ok();
+        }
+        return BadRequest();
     }
 
     [HttpDelete]
     public async Task<IActionResult> Delete(Guid id)
     {
-        await mediator.Send(new DeleteUserCommand(id));
-        return Ok();
+        var IsDelete = await mediator.Send(new DeleteUserCommand(id));
+        if (IsDelete)
+        {
+            return Ok();
+        }
+        return NotFound();
     }
 }

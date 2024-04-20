@@ -74,6 +74,7 @@ public class UserRepository : IUserRepository
 
         try
         {
+
             entity.UpdateName(user.Name);
             entity.UpdateEmail(user.Email);
             entity.UpdatePassword(user.Password);

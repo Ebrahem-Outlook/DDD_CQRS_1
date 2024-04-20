@@ -1,7 +1,6 @@
 ﻿
-namespace Persistence.Data
+namespace Persistence.Data;
+
+public interface IUnitOfWork
 {
-    internal interface IUnitOfWork
-    {
-    }
 }

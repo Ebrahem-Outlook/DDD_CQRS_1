@@ -1,20 +1,12 @@
-﻿
-using Contracts.DTO;
-using Domain.Etities;
+﻿using Contracts.Users;
 using MediatR;
 
 namespace Application.Services.Users.Command.Update;
 
-public class UpdateUserCommand : IRequest
+public class UpdateUserCommand : IRequest<bool>
 {
-    public string UserName { get; set; }
-    public string Email { get; set; }
-    public string Password { get; set; }
-
-    public UpdateUserCommand(UserDTO user)
-    {
-        UserName = user.UserName;
-        Email = user.Email;
-        Password = user.Password;
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
+    public string Password { get; set; } = string.Empty;
 }

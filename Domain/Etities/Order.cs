@@ -8,11 +8,11 @@ public class Order : IEquatable<Order?>
 
     public Order() { }
 
-    public Order(string name, decimal totalPrice, List<OrderItem> orderItems)
+    public Order(string name, List<OrderItem> orderItems)
     {
         Id = Guid.NewGuid();
         Name = name;
-        TotalPrice = totalPrice;
+        TotalPrice = orderItems.Sum(o => o.Price);
         OrderItems = orderItems;
     }
 
